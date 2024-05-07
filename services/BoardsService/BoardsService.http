@@ -1,0 +1,6 @@
+@BoardsService_HostAddress = http://localhost:5025
+
+GET {{BoardsService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
