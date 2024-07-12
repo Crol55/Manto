@@ -35,6 +35,9 @@ namespace AuthenticationService
                 app.UseSwaggerUI();
             }
 
+
+            app.UseExceptionHandler("/error");
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
