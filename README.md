@@ -4,19 +4,20 @@ The acronym of this project name is for management tool.
 ## Project overview
 I wanted to build a project that would showcase most of my programming experience/skills, and that in the future could be useful for me to build other projects, so I decided to build a management tool. 
 
+What you will see in this project?
 The project will have the following *architecture/practices/tools/frameworks/etc*: 
 * Microservices architecture. 
+* .NET 8 (web API, Signal R)
+* Angular 17.
 * Git branching strategy.
-* S.O.L.I.D
+* SOLID Principles
 * Design patterns.
 * REST API standards.
 * OWASP
-* JWT
-* .NET 8 (web API, Signal R)
-* Angular 17.
-* Unit testing.
+* Authentication and Authorization (Using JWT Bearer)
+* Unit testing (XUnit).
 * CI/CD
-* DBMS
+* DBMS (SQL Server - Multi Schema)
 
 ### Microservices architecture
 Previously I have built microservices in teams of 3 - 4 programmers, where usually every developer was in charge of at least one microservice. So I have experience building microservices and I know which NO functional requirements it offers, for example scalability. Later on I will write more on why I choose this architecture.  
