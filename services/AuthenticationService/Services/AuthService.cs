@@ -33,16 +33,10 @@ namespace AuthenticationService.Services
             // verify password
             if (_passwordHashingService.VerifyPassword(password, userRegistered.Password))
             {
-                Console.WriteLine("Generating JWT TOKEN.....");
-                var jwtToken = _jwtTokenGenerator.GenerateToken(EmailOrUsername);
-                Console.WriteLine(jwtToken);
-
+                return _jwtTokenGenerator.GenerateToken(EmailOrUsername);
             }
             else
                 throw new ValidationException("Your password doesnt match!");
-
-
-            return "JWT Generated";
         }
     }
 }
