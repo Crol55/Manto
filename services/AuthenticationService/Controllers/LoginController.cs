@@ -12,6 +12,7 @@ namespace AuthenticationService.Controllers
         public LoginController(IAuthService authService) 
         { 
             _authService = authService;
+
         }
 
         [HttpPost]
@@ -19,8 +20,12 @@ namespace AuthenticationService.Controllers
         {
 
             var jwtTokenString = _authService.Login(loginRequestDto.EmailOrUsername, loginRequestDto.Password!);
+            
+            LoginResponseDto loginResponseDto = new(){ 
+                Jwt = jwtTokenString
+            };
 
-            return Ok(jwtTokenString);
+            return Ok(loginResponseDto);
         }
     }
 }
