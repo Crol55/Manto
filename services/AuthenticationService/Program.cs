@@ -16,7 +16,7 @@ namespace AuthenticationService
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            builder.Services.AddScoped<IJwtTokenGenerator, AsymmetricJwtTokenGenerator>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
