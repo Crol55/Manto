@@ -1,4 +1,5 @@
 
+using AuthenticationService.Configuration;
 using AuthenticationService.Data;
 using AuthenticationService.Services;
 using AuthenticationService.Services.Interfaces;
@@ -27,6 +28,8 @@ namespace AuthenticationService
 
             builder.Services.AddAutoMapper(typeof(Program));
 
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,7 +38,6 @@ namespace AuthenticationService
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
 
             app.UseExceptionHandler("/error");
 
