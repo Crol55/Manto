@@ -20,15 +20,31 @@ The project will have the following *architecture/practices/tools/frameworks/etc
 * DBMS (SQL Server - Multi Schema)
 
 ### Microservices architecture
-Previously I have built microservices in teams of 3 - 4 programmers, where usually every developer was in charge of at least one microservice. So I have experience building microservices and I know which NO functional requirements it offers, for example scalability. Later on I will write more on why I choose this architecture.  
+I chose this architectural pattern to address non-functional requirements such as scalability and maintainability. Additionally, I decided to follow microservices principles by allowing each microservice to have its own database schema.
+
+The architecture will have the following microservices:
+* Authorization
+* Boards management
+* Cards management
+* Realtime-update
+
+Every microservice will have its own database.
+![microservices](blob/images/Architecture_Diagram.png)
+
+#### Authorization Service
+Its a Web Api that will alloud every user to create an account and provide every user with a JWT (Json Web Token).
+* JWT will use Assymetric encryption.
 
 ### Branching strategy
 All microservices will be host in a single Github repository, this is known in the IT industry as mono-repo. In my case I choose mono-repo because im a single person working on the whole project, so it will be easiear to handle and also to deploy changes. 
-The Git branching strategy that I will use is called GitHub flow, where the main branch is always production-ready, and changes to this trigger the CI/CD process.
+
+The Git branching strategy that I will use is called GitHub flow, where the main branch is always production-ready, and any change on this branch will trigger the CI/CD process.
 
 
 ### .NET 8 (.NET Core)
-I Choose to use **.NET 8** because it offers Long term support (LTS) for development and also brings the support for the new C# 12, which brings new simplified sintaxis and improvements to performance. The project templates that I will use are: 
+I Choose to use **.NET 8** because it offers cross-platform development, Long term support (LTS), and also brings the support for the new C# 12, which offers a new simplified sintaxis and improvements to performance. 
+
+The project templates that I will use are: 
 * ASP.NET Core - Web API
 
 
