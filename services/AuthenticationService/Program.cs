@@ -1,4 +1,5 @@
 
+using AuthenticationService.Configuration;
 using AuthenticationService.Data;
 using AuthenticationService.Services;
 using AuthenticationService.Services.Interfaces;
@@ -15,7 +16,7 @@ namespace AuthenticationService
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            builder.Services.AddScoped<IJwtTokenGenerator, AsymmetricJwtTokenGenerator>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -27,6 +28,8 @@ namespace AuthenticationService
 
             builder.Services.AddAutoMapper(typeof(Program));
 
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,7 +38,6 @@ namespace AuthenticationService
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
 
             app.UseExceptionHandler("/error");
 
