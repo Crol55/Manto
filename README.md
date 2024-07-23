@@ -29,7 +29,7 @@ The architecture will have the following microservices:
 * Realtime-update
 
 Every microservice will have its own database.
-![microservices](blob/images/Architecture_Diagram.png)
+![microservices](./images/Architecture_Diagram.png)
 
 #### Authorization Service
 Its a Web Api that will alloud every user to create an account and provide every user with a JWT (Json Web Token).
