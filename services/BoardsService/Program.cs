@@ -1,4 +1,7 @@
 
+using BoardsService.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace BoardsService
 {
     public class Program
@@ -13,6 +16,9 @@ namespace BoardsService
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<BoardsDbContext>( options => 
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"))
+            );
 
             var app = builder.Build();
 
