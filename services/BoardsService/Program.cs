@@ -1,5 +1,7 @@
 
 using BoardsService.Data;
+using BoardsService.Services;
+using BoardsService.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardsService
@@ -19,6 +21,8 @@ namespace BoardsService
             builder.Services.AddDbContext<BoardsDbContext>( options => 
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"))
             );
+
+            builder.Services.AddScoped<IProjectService, ProjectService>();
 
             var app = builder.Build();
 
