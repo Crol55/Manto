@@ -7,7 +7,6 @@ namespace AuthenticationService.Controllers
 {
     public class ErrorHandlerController: ControllerBase
     {
-        [NonAction]
         [Route("/error")]
         public IActionResult GlobalErrorHandler()
         {
