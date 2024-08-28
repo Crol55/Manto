@@ -7,14 +7,16 @@ I wanted to build a project that would showcase most of my programming experienc
 What you will see in this project?
 The project will have the following *architecture/practices/tools/frameworks/etc*: 
 * [Microservices architecture](#microservices-architecture)
+    * [Authorization Service](#authorization-service)
+    * [Boards Service](#boards-service)
 * [DBMS (SQL Server - Multi Schema)](#database---sql-server) 
+* [Git branching strategy](#branching-strategy)
 * .NET 8 (web API, Signal R)
 * Angular 17
-* Git branching strategy
 * SOLID Principles
 * Design patterns
-* REST API standards
 * OWASP
+* REST API standards
 * Authentication and Authorization (Using JWT Bearer)
 * Unit testing (XUnit)
 * CI/CD
@@ -32,11 +34,18 @@ Every microservice will have its own separate data storage, thats why every micr
 
 ![microservices](./images/Architecture_Diagram.png)
 
-#### Authorization Service
 
-Its a Web Api that will alloud every user to create an account, and login, providing every user with a JWT (Json Web Token).
-* This service is using Assymetric encryption to generate the JWT.
+### Authorization Service
+This microservice is a Web API that allows clients to create an account and handle login operations. Upon a successful login, the service issues a JWT (JSON Web Token) to the user.
 
+The service uses asymmetric encryption to generate JWTs, involving a pair of private and public keys.
+
+### Boards Service
+This microservice is a Web API that allows user to manage their boards and projects. 
+
+This service has its own middleware, that will use the public key from the asymmetric key in order to determine if the JWT used by the user is issued by the Authentication Service.
+
+This service also uses ENV variables for **configuration**. You can check the appSettings to determine the variables it requires. 
 
 ## Branching strategy
 All microservices will be host in a single Github repository, this is known in the IT industry as mono-repo. In my case I choose mono-repo because im a single person working on the whole project, so it will be easiear to handle and also to deploy changes. 
