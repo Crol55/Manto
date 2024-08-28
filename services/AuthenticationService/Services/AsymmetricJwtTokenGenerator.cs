@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using AuthenticationService.Configuration;
 using AuthenticationService.Services.Interfaces;
@@ -31,13 +32,20 @@ namespace AuthenticationService.Services
         }
 
 
-        public string GenerateToken(string email)
+        public string GenerateToken(string userGuid)
         {
+            // http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
+            var userClaims = new List<Claim>()
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userGuid)
+            };
+
             var jwt = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpirationInMinutes),
-                signingCredentials: _asymmetricSigningCredentials
-            );;
+                signingCredentials: _asymmetricSigningCredentials, 
+                claims: userClaims
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
