@@ -20,15 +20,10 @@ namespace BoardsService.Services
                 throw new ValidationException($"The project with name:'{project.Nombre}' is duplicated");
             }
 
-            Project newProject = new()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Nombre = project.Nombre,
-                UserId = project.UserId,
-                UpdatedAt = DateTime.Now
-            };
-
-            _dbContext.Projects.Add(newProject);
+            project.Id = Guid.NewGuid().ToString();
+            project.UpdatedAt = DateTime.Now;
+            
+            _dbContext.Projects.Add(project);
             _dbContext.SaveChanges();
         }
     }

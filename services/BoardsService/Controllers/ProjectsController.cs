@@ -35,10 +35,16 @@ namespace BoardsService.Controllers;
             };
             
             _projectService.AddNewProject(newProject);
-            
-            return Created();
+       
+            return CreatedAtAction(nameof(GetProject), new { id = newProject.Id }, projectRequestDto);
         }
 
+        [HttpGet ("{id:guid}")]
+        public IActionResult GetProject(int id)
+        {
+
+            return Ok();
+        }
         
     }
 
