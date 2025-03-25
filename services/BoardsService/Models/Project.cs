@@ -11,7 +11,8 @@ namespace BoardsService.Models
     public class Project
     {
         [Key]
-        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
 
         [StringLength(100)]
         public string Nombre { get; set; }
