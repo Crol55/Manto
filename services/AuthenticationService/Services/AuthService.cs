@@ -1,6 +1,7 @@
 ﻿using AuthenticationService.Data;
 using AuthenticationService.Errors;
 using AuthenticationService.Services.Interfaces;
+using AuthenticationService.Models;
 
 namespace AuthenticationService.Services
 {
@@ -24,11 +25,9 @@ namespace AuthenticationService.Services
         public string Login(string EmailOrUsername, string password)
         {
             // look for the user (Throw Error if required)
-            var userRegistered = _authenticationDbContext.User
-                .FirstOrDefault(x => x.Username == EmailOrUsername || x.Email == EmailOrUsername);
-
-            if (userRegistered == null)
-                throw new NotFoundException("The information provided is Incorrect");
+            User userRegistered = _authenticationDbContext.User
+                .FirstOrDefault(x => x.Username == EmailOrUsername || x.Email == EmailOrUsername)
+                ?? throw new NotFoundException("The information provided is Incorrect");
 
             // verify password
             if (_passwordHashingService.VerifyPassword(password, userRegistered.Password))
