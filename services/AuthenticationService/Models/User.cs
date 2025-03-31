@@ -8,8 +8,8 @@ namespace AuthenticationService.Models
     public class User
     {
         [Key]
-        [StringLength(150)]
-        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -20,7 +20,7 @@ namespace AuthenticationService.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(60)]
+        [StringLength(45)]
         public string Password { get; set; }
 
         [Required]
