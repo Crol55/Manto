@@ -30,7 +30,6 @@ namespace AuthenticationService.Services
                     throw new ValidationException($"The Email [{newUser.Email}], is already registered");
             }
 
-            newUser.Id = Guid.NewGuid().ToString();
             // hashing the password to ensure security
             newUser.Password = _passwordHashingService.HashPassword(newUser.Password);
 

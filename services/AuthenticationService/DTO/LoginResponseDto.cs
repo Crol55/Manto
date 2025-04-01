@@ -2,6 +2,6 @@
 {
     public class LoginResponseDto
     {
-        public string? Jwt { get; init; }
+        public string Jwt { get; init; } = string.Empty;
     }
 }
