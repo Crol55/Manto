@@ -2,12 +2,12 @@
 The acronym of this project name is for management tool. 
 
 ## Project overview
-I wanted to build a project that would showcase most of my programming experience/skills, and that in the future could be useful for me to build other projects, so I decided to build a management tool. 
+I wanted to build a project that would be useful for me to build other projects, so I decided to build a management tool. 
 
 What you will see in this project?
 The project will have the following *architecture/practices/tools/frameworks/etc*: 
 * [Microservices architecture](#microservices-architecture)
-    * [Authorization Service](#authorization-service)
+    * [Authentication Service](#authorization-service)
     * [Boards Service](#boards-service)
 * [DBMS (SQL Server - Multi Schema)](#database---sql-server) 
 * [Git branching strategy](#branching-strategy)
@@ -25,20 +25,20 @@ The project will have the following *architecture/practices/tools/frameworks/etc
 I chose this architectural pattern to address non-functional requirements such as scalability and maintainability. Additionally, I decided to follow microservices principles by allowing each microservice to have its own database schema.
 
 The architecture will have the following microservices:
-* Authorization
+* Authentication
 * Boards management
 * Cards management
-* Realtime-update
+* Realtime updates
 
 Every microservice will have its own separate data storage, thats why every microservice will have its own **Schema** on the same database.
 
 ![microservices](./images/Architecture_Diagram.png)
 
 
-### Authorization Service
-This microservice is a Web API that allows clients to create an account and handle login operations. Upon a successful login, the service issues a JWT (JSON Web Token) to the user.
+### Authentication Service
+This microservice is a Restful Web API that allows clients to create an account and handle login operations. Upon a successful login, the service issues a JWT (JSON Web Token) to the user.
 
-The service uses asymmetric encryption to generate JWTs, involving a pair of private and public keys.
+The service uses asymmetric encryption to generate JWTs, involving a pair of private and public keys. Only the public key will be shared to the microservices to enforce security.
 
 ### Boards Service
 This microservice is a Web API that allows user to manage their boards and projects. 
@@ -48,9 +48,9 @@ This service has its own middleware, that will use the public key from the asymm
 This service also uses ENV variables for **configuration**. You can check the appSettings to determine the variables it requires. 
 
 ## Branching strategy
-All microservices will be host in a single Github repository, this is known in the IT industry as mono-repo. In my case I choose mono-repo because im a single person working on the whole project, so it will be easiear to handle and also to deploy changes. 
+All microservices will be host in a single Github repository (mono-repo). In my case I choose mono-repo because im a single person working on the whole project, so it will be easiear to handle and also to deploy changes. 
 
-The Git branching strategy that I will use is called GitHub flow, where the main branch is always production-ready, and any change on this branch will trigger the CI/CD process.
+The Git branching strategy that I will use is called **GitHub flow**, where the main branch is always production-ready, and any change on this branch will trigger the CI/CD process.
 
 
 ## .NET 8 (.NET Core)

@@ -32,10 +32,11 @@ namespace AuthenticationService.Services
             // verify password
             if (_passwordHashingService.VerifyPassword(password, userRegistered.Password))
             {
-                return _jwtTokenGenerator.GenerateToken(userRegistered.Id);
+                return _jwtTokenGenerator.GenerateToken(userRegistered.Id.ToString());
             }
             else
                 throw new ValidationException("Your password doesnt match!");
+
         }
     }
 }

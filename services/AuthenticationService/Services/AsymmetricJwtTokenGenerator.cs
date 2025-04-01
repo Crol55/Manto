@@ -11,35 +11,33 @@ namespace AuthenticationService.Services
     public class AsymmetricJwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly JwtOptions _jwtOptions;
-        private static readonly SigningCredentials _asymmetricSigningCredentials;
+        private readonly SigningCredentials _asymmetricSigningCredentials;
         public AsymmetricJwtTokenGenerator(IOptions<JwtOptions> jwtOptions) {
             _jwtOptions = jwtOptions.Value;
-        }
 
-        // static constructor, will be executed ONCE per instance.
-        static AsymmetricJwtTokenGenerator() {
-
-            string privateKey = File.ReadAllText("private.xml");
+            //string privateKey = File.ReadAllText("private.xml");
+            if (string.IsNullOrEmpty(_jwtOptions.SecretKey))
+                throw new InvalidOperationException("Private Key not found.");
 
             RSA rsa = RSA.Create();
-            rsa.FromXmlString(privateKey);
+            rsa.FromXmlString(_jwtOptions.SecretKey);
 
             var rsaSecurityKey = new RsaSecurityKey(rsa);
 
             _asymmetricSigningCredentials = new SigningCredentials(
-                rsaSecurityKey, 
+                rsaSecurityKey,
                 SecurityAlgorithms.RsaSha256);
         }
-
 
         public string GenerateToken(string userGuid)
         {
             // http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
+            
             var userClaims = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userGuid)
             };
-
+            
             var jwt = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpirationInMinutes),
