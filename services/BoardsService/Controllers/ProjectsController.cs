@@ -27,17 +27,17 @@ namespace BoardsService.Controllers;
             if (string.IsNullOrEmpty(userId))
                 throw new ValidationException($"The claim {JwtRegisteredClaimNames.Sub} was not provided");
             
-
-            Project newProject = new() 
+            /*Project newProject = new() 
             {
                 Nombre = projectRequestDto.Nombre,
-                UserId = userId
-            };
+                UserId = Guid.Parse( userId )
+            };*/
             
-            _projectService.AddNewProject(newProject);
+            var projectCreated = _projectService.AddNewProject( projectName: projectRequestDto.Nombre, userId: Guid.Parse(userId));
        
-            return CreatedAtAction(nameof(GetProject), new { id = newProject.Id }, projectRequestDto);
+            return CreatedAtAction(nameof(GetProject), new { id = projectCreated.Id }, projectRequestDto);
         }
+
 
         [HttpGet ("{id:guid}")]
         public IActionResult GetProject(int id)
