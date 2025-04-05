@@ -11,7 +11,8 @@ namespace BoardsService.Models
     public class Project
     {
         [Key]
-        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
 
         [StringLength(100)]
         public string Nombre { get; set; }
@@ -20,10 +21,11 @@ namespace BoardsService.Models
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Column("Updated_at")]
         public DateTime UpdatedAt { get; set; }
 
         [Column("USER_id")]
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

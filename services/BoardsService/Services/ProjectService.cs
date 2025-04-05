@@ -13,18 +13,31 @@ namespace BoardsService.Services
             _dbContext = dbContext;    
         }
 
-        public void AddNewProject(Project project)
+        public Project AddNewProject(string projectName, Guid userId)
         {
-            if (_dbContext.Projects.FirstOrDefault(p => p.Nombre == project.Nombre) is not null)
-            {
-                throw new ValidationException($"The project with name:'{project.Nombre}' is duplicated");
-            }
+            IEnumerable<Project> projects = _dbContext.Projects
+                .Where(p => (p.UserId == userId) && (p.Nombre == projectName))
+                .ToList();
 
-            project.Id = Guid.NewGuid().ToString();
-            project.UpdatedAt = DateTime.Now;
+            /*if (!projects.Any()) 
+            {
+                throw new ValidationException($"The user is invalid");
+            }*/
             
-            _dbContext.Projects.Add(project);
+            if (projects.Any())
+                throw new ValidationException($"The project with name:'{projectName}' is duplicated");
+            
+
+            Project newProject = new Project()
+            {
+                Nombre = projectName,
+                UserId = userId
+            };
+            
+            _dbContext.Projects.Add(newProject);
             _dbContext.SaveChanges();
+
+            return newProject;
         }
     }
 }

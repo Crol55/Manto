@@ -4,6 +4,6 @@ namespace BoardsService.Services.Interfaces
 {
     public interface IProjectService
     {
-        void AddNewProject(Project project);
+        Project AddNewProject(string projectName, Guid userId);
     }
 }
