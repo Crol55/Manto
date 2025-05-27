@@ -1,4 +1,4 @@
-﻿using BoardsService.Data;
+using BoardsService.Data;
 using BoardsService.DTO;
 using BoardsService.DTO.Extensions;
 using BoardsService.Models;
@@ -24,7 +24,7 @@ namespace BoardsService.Services
             newBoard.UserId = userId;
 
             var isBoardDuplicated = await _dbContext.Boards
-                .AnyAsync(b => (b.ProjectId == newBoard.ProjectId) && (b.Name == newBoard.Name));
+                .AnyAsync(b => (b.UserId == userId) && (b.ProjectId == newBoard.ProjectId) && (b.Name == newBoard.Name));
 
             if (isBoardDuplicated)
                 throw new DuplicatedEntryException($"The Board with name:'{newBoard.Name}' is duplicated");
