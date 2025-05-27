@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using BoardsService.Configuration;
+using Asp.Versioning;
 
 namespace BoardsService
 {
