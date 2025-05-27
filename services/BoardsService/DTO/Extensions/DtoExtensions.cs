@@ -1,4 +1,4 @@
-﻿using BoardsService.Models;
+using BoardsService.Models;
 
 namespace BoardsService.DTO.Extensions
 {
@@ -12,5 +12,16 @@ namespace BoardsService.DTO.Extensions
                 ProjectId = boardCreateDto.ProjectId
             };
         }
+        public static BoardResponseDto ToDTO(this Board board) {           
+
+            return new BoardResponseDto(
+                board.Id, 
+                board.Name, 
+                board.CreatedAt, 
+                board.UserId,
+                board.ProjectId
+            );
+        }
+
     }
 }
