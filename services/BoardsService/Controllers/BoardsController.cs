@@ -1,14 +1,19 @@
-﻿using BoardsService.DTO;
+using BoardsService.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using ServiceExceptionsLibrary;
 using BoardsService.Services.Interfaces;
 using BoardsService.Models;
+using Microsoft.AspNetCore.Authorization;
+using Asp.Versioning;
+using BoardsService.DTO.Extensions;
 
 namespace BoardsService.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Authorize]
+    [ApiVersion(1.0)]
+    [Route("[controller]")]
     public class BoardsController: ControllerBase
     {
         private readonly IBoardService _boardService;
@@ -30,7 +35,7 @@ namespace BoardsService.Controllers
 
             Board createdBoard = await _boardService.AddNewBoard(boardCreateDto, parsedUserId);
 
-            return CreatedAtAction(nameof(GetBoard), new { id = createdBoard.Id }, "convert model to dto..");
+            return CreatedAtAction(nameof(GetBoard), new { id = createdBoard.Id }, createdBoard.ToDTO());
         }
 
 
