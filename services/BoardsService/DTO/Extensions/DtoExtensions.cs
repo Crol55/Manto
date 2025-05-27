@@ -1,4 +1,5 @@
-using BoardsService.Models;
+﻿using BoardsService.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BoardsService.DTO.Extensions
 {
@@ -12,6 +13,17 @@ namespace BoardsService.DTO.Extensions
                 ProjectId = boardCreateDto.ProjectId
             };
         }
+
+        public static BoardList ToBoardList(this ListCreateDto dto) { 
+        
+            return new BoardList() 
+            { 
+                Name = dto.Name,
+                Position = dto.Position!.Value,
+                BoardId = dto.BoardId!.Value
+            };
+        }
+
         public static BoardResponseDto ToDTO(this Board board) {           
 
             return new BoardResponseDto(
