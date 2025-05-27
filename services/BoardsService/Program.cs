@@ -29,28 +29,37 @@ namespace BoardsService
 
             Console.WriteLine("actual Environment->" + builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
 
-            //string publicKey = File.ReadAllText("/public.xml");
             JwtOptions jwtOptions = new();
             builder.Configuration.GetSection(JwtOptions.sectionName).Bind(jwtOptions);
 
+            RSA rsa = RSA.Create();
+            rsa.FromXmlString(jwtOptions.PublicKey);
+
             builder.Services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
-
-                    RSA rsa = RSA.Create();
-                    rsa.FromXmlString(jwtOptions.PublicKey);
-
+                    //options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateLifetime = false,
                         ValidateIssuer = true,
                         ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new RsaSecurityKey(rsa), 
                         ValidIssuer = jwtOptions.Issuer
                     };
 
                     options.MapInboundClaims = false;
-                }) ;
-           
+                });
+
+            // Add API-versioning
+            builder.Services.AddApiVersioning(
+                options => { 
+                    options.DefaultApiVersion = new ApiVersion(1.0);
+                    options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.ApiVersionReader = new QueryStringApiVersionReader();
+            }).AddMvc();
+
+            // Add to Dependency-Injection
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<IBoardService, BoardService>();
 
