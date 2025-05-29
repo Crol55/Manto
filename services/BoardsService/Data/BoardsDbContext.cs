@@ -1,4 +1,4 @@
-using BoardsService.Models;
+﻿using BoardsService.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardsService.Data
@@ -14,6 +14,7 @@ namespace BoardsService.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Board> Boards { get; set; }
         public DbSet<BoardList> BoardLists { get; set; }
+        public DbSet<BoardMember> BoardMembers { get; set; }
         public DbSet<BoardRoles> BoardRoles { get; set; }
 
 
@@ -29,6 +30,11 @@ namespace BoardsService.Data
 
             modelBuilder.Entity<BoardList>()
                 .Property(x => x.UpdatedAt)
+                .HasColumnType("DATETIME");
+
+            modelBuilder.Entity<BoardMember>()
+                .Property(x => x.JoiningDate)
+                .HasDefaultValueSql("GETDATE()")
                 .HasColumnType("DATETIME");
         }
     }
