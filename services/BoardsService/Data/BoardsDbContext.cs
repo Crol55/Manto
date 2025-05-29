@@ -14,6 +14,7 @@ namespace BoardsService.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Board> Boards { get; set; }
         public DbSet<BoardList> BoardLists { get; set; }
+        public DbSet<BoardRoles> BoardRoles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
