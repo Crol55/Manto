@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,8 +22,8 @@ public class BoardMember
     public byte BoardRolesId { get; set; } // Foreign key
 
     //  Reference-navigation: if <nullable> is active then, the reference-navigation must match the foreign key's nullability
-    BoardRoles Role { get; init; }
+    public BoardRoles Role { get; init; }
 
-    Board Board { get; init; }
+    public Board Board { get; init; }
 }
 
