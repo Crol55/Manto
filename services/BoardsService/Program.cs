@@ -63,6 +63,7 @@ namespace BoardsService
             // Add to Dependency-Injection
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<IBoardService, BoardService>();
+            builder.Services.AddScoped<IListService, ListService>();
             builder.Services.AddScoped<IBoardMemberService, BoardMemberService>();
 
             var app = builder.Build();
