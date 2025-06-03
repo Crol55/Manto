@@ -14,6 +14,21 @@ namespace BoardsService.Services
             _dbContext = dbContext;
         }
 
+        public async Task<BoardMember> AddUserAsBoardMemberAsync(Guid targetBoardId, Guid targetUserId, Roles roleToAssign) 
+        {
+            var newBoardMember = new BoardMember() 
+            {
+                BoardId = targetBoardId,
+                UserId = targetUserId,
+                BoardRolesId = GetRoleIdByRoleName(roleToAssign)
+            };
+
+            _dbContext.BoardMembers.Add(newBoardMember);
+            await _dbContext.SaveChangesAsync();
+
+            return newBoardMember;
+        }
+
         public bool VerifyUserMembership(Guid boardId, Guid userId)
         {
             return _dbContext.BoardMembers.Any(m => m.BoardId == boardId && m.UserId == userId);
@@ -40,6 +55,14 @@ namespace BoardsService.Services
                 "Viewer"        => Roles.Viewer,
                 _               => Roles.None,
             };
+        }
+
+        private byte GetRoleIdByRoleName(Roles roleToMap)
+        {
+
+            BoardRoles boardRoles = _dbContext.BoardRoles.First(br => br.RoleName == roleToMap.ToString());
+
+            return boardRoles.Id;
         }
     }
 }
