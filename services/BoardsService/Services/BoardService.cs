@@ -1,9 +1,9 @@
+using BoardsService.Common.Enums;
 using BoardsService.Data;
 using BoardsService.DTO;
 using BoardsService.DTO.Extensions;
 using BoardsService.Models;
 using BoardsService.Services.Interfaces;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServiceExceptionsLibrary;
 
@@ -13,9 +13,12 @@ namespace BoardsService.Services
     {
         private readonly BoardsDbContext _dbContext;
         private readonly IProjectService _projectService;
-        public BoardService(BoardsDbContext dbContext, IProjectService projectService) { 
+        private readonly IBoardMemberService _boardMemberService;
+        public BoardService(BoardsDbContext dbContext, IProjectService projectService, IBoardMemberService boardMemberService)
+        { 
             _dbContext = dbContext;
             _projectService = projectService;
+            _boardMemberService = boardMemberService;
         }
 
         public async Task<Board> AddNewBoard(BoardCreateDto dto, Guid userId) {
@@ -38,9 +41,16 @@ namespace BoardsService.Services
 
             try
             {
+                using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
                 _dbContext.Boards.Add(newBoard);
 
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
+
+                // Insert the users permission for his board
+                await _boardMemberService.AddUserAsBoardMemberAsync(newBoard.Id, userId, Roles.Owner);
+
+                await transaction.CommitAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine("Error in the database:" + ex);
