@@ -1,15 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using BoardsService.DTO;
+using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using ServiceExceptionsLibrary;
+using BoardsService.Services.Interfaces;
+using BoardsService.Models;
+using Microsoft.AspNetCore.Authorization;
+using Asp.Versioning;
+using BoardsService.DTO.Extensions;
 
 namespace BoardsService.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Authorize]
+    [ApiVersion(1.0)]
+    [Route("[controller]")]
     public class BoardsController: ControllerBase
     {
-        [HttpPost]
-        public IActionResult CreateBoard() {
+        private readonly IBoardService _boardService;
+        public BoardsController(IBoardService boardService) {
+            _boardService = boardService;
+        }
 
-            return Ok("your board will be created");
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBoard(BoardCreateDto boardCreateDto) {
+
+            string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            // VERIFY THAT THE USERID IS NOT NULL
+            if (string.IsNullOrEmpty(userId))
+                throw new ValidationException($"The claim {JwtRegisteredClaimNames.Sub} was not provided");
+
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+                throw new ValidationException("Your userId is not well-formatted");
+
+            Board createdBoard = await _boardService.AddNewBoard(boardCreateDto, parsedUserId);
+
+            return CreatedAtAction(nameof(GetBoard), new { id = createdBoard.Id }, createdBoard.ToDTO());
+        }
+
+
+        [HttpGet ("{id:guid}")]
+        public ActionResult GetBoard(Guid id) { 
+        
+            return Ok();
         }
     }
 }

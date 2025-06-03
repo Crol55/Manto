@@ -5,12 +5,15 @@ using BoardsService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using ServiceExceptionsLibrary;
+using Asp.Versioning;
 
 namespace BoardsService.Controllers;
 
-    [Route("[controller]")]
+    
     [ApiController]
     [Authorize]
+    [Route("[controller]")]
+    [ApiVersion(1.0)]
     public class ProjectsController: ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -20,6 +23,7 @@ namespace BoardsService.Controllers;
         }
 
         [HttpPost]
+        [MapToApiVersion(1.0)]
         public IActionResult CreateNewProject(ProjectRequestDto projectRequestDto) {
 
             string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
@@ -40,9 +44,10 @@ namespace BoardsService.Controllers;
 
 
         [HttpGet ("{id:guid}")]
-        public IActionResult GetProject(int id)
+        [MapToApiVersion(1.0)]
+        public IActionResult GetProject(Guid id)
         {
-
+            Console.WriteLine("Guid failing");
             return Ok();
         }
         
