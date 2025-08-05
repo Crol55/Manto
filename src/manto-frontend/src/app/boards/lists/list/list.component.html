@@ -1,0 +1,49 @@
+<div class="list-outline">
+    <div class="list-header">
+        <input type="text" [value]="listName" />
+        <hr>
+    </div>
+    <div #body>
+        <!--<button class="d-flex btn btn-warning align-items-center w-100">
+            <mat-icon style="margin-right: 5px;">assignment_add</mat-icon>
+            <span>Add a Card</span>
+        </button>
+        <hr>
+        -->
+
+        <hr>
+        @for (card of cardslist; track $index)
+        {
+            <div style="padding-bottom: 10px;">
+                <app-card [name]="card"></app-card>
+            </div>
+        }
+
+        @if(!isAddingCard){
+            <button class="d-flex align-items-center add-card-btn w-100" (click)="openNewCardForm()">
+                <mat-icon>assignment_add</mat-icon>
+                <span>Add a Card</span>
+            </button>
+        }@else {
+            <form (ngSubmit)="addNewCard()" #f="ngForm">
+                <textarea
+                    class="cards-name-textarea"
+                    name="cardName"
+                    [(ngModel)]="cardName"
+                    required
+                    placeholder="Enter your Card's name"
+                    (keydown.enter)="addNewCard();"
+                    #cardNameTextAreaRef
+                ></textarea>
+                    
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-success btn-sm me-1">Done</button>
+                    
+                    <button type="button" class="btn btn-danger btn-sm" (click)="closeNewCardForm()">
+                        <mat-icon style="min-width: 0; font-size: 18px; height: 18px; width: 18px; line-height: 1; vertical-align: middle; ">close</mat-icon>
+                    </button>
+                </div>
+            </form>
+        }
+    </div>
+</div>

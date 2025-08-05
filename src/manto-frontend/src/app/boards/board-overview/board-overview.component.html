@@ -1,0 +1,25 @@
+
+<h3>Boards Overview</h3>
+<hr>
+
+<h2>My Boards</h2>
+
+<div style="max-height: 60vh; overflow: auto;">
+  <mat-grid-list cols="4" rowHeight="2:1" gutterSize="15px">
+    <mat-grid-tile> <mat-grid-tile-header>Un Header normal</mat-grid-tile-header>1</mat-grid-tile>
+    @for (item of boards; track $index) 
+    {
+      <a [routerLink]="['/boards', item.id]">
+        <mat-grid-tile (click) = "onBoardSelection('1')" >
+          <mat-grid-tile-header>{{item.name}}</mat-grid-tile-header>
+          {{item.id}}
+          <mat-grid-tile-footer>
+            Con tu amor
+            <mat-icon>{{item.icon}}</mat-icon>
+          </mat-grid-tile-footer>
+        </mat-grid-tile>
+      </a>
+    }
+  </mat-grid-list>
+</div>
+

@@ -7,14 +7,44 @@
             </div>
 
             <nav class="nav flex-sm-column justify-content-center">
-                <a href="#" class="nav-link active">Boards <span>+</span></a>
-                <a href="#" class="nav-link">Projects</a>
-                <a href="#" class="nav-link">Teams</a>
+
+                <a class="nav-link d-flex justify-content-between align-items-center" 
+                    style="padding-right: 0.5rem;" (click)="toggleBoards()">
+                    Boards 
+                    <div>
+                        <mat-icon (click) = "CreateBoard()">note_add</mat-icon> 
+                        <mat-icon >more_horiz</mat-icon>
+                    </div>
+                </a>
+                 <!-- Collapsible Board List -->
+                  @if (!showBoards) {
+                    <ul class="list-unstyled ms-3">
+                        @for (board of boards; track board.id) {
+                            <li class="py-1" (click)="onOpenBoard(board.id)">{{ board.name }}</li>
+                        }
+                    </ul>
+                  }
+                
+                <a class="nav-link d-flex justify-content-between align-items-center">
+                    Projects
+                    <mat-icon>note_add</mat-icon>
+                </a>
+                <!--<ul class="list-unstyled ms-3">
+                    <li>Hello world</li>
+                </ul>-->
+                <a class="nav-link d-flex justify-content-between">
+                    Teams
+                    <div>
+                        <mat-icon>expand_less</mat-icon>
+                        <mat-icon>keyboard_arrow_down</mat-icon>
+                    </div>
+                    
+                </a>
             </nav>
         </aside>
 
-        <div class="col-7">
-            <h1>hola mundo</h1>
+        <div class="col">
+            <app-board-overview></app-board-overview>
         </div>
     </div>
 </div>

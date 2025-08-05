@@ -1,0 +1,54 @@
+<div class="gradient-custom" style="height: 100vh;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+
+        <div class="card bg-dark">
+          <div class="card-body p-5 text-center" id="parteNegra">
+
+            <div class="mb-md-2 mt-md-1 pb-3">
+              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <p class="text-white-50 mb-5">Enter Email and password</p>
+
+              <div class="form-outline form-white mb-3 position-relative">
+                <input type="email" id="emailInput" class="form-control form-control-lg pe-5" maxlength="100"
+                  placeholder="Enter your Username" #email>
+
+                <mat-icon style="
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-60%);
+                        color: #6c757d;
+                        pointer-events: none;
+                        ">person</mat-icon>
+
+                <label class="form-label" for="typeEmailX" style="color: coral;">Email</label>
+              </div>
+
+              <div class="form-outline form-white mb-3 position-relative">
+                <input [type]="isPasswordVisible? 'text': 'password'" class="form-control form-control-lg pe-5"
+                  placeholder="Enter your password" autocomplete="off" maxlength="45" id="typePasswordX" #psw />
+
+                <mat-icon class="pwd-icon" (click)="togglePasswordVisiblity()">
+                  {{ isPasswordVisible? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+
+                <label class="form-label" for="typePasswordX" style="color: coral;">Password</label>
+              </div>
+
+              <button class="btn btn-outline-success btn-lg px-5" type="submit"
+                (click)="onLogin(email.value, psw.value)">Login</button>
+            </div>
+
+            <div>
+              <p class="mb-0">Forgot password? <a href="usuario/recovery" class="text-white-50 fw-bold">Recover</a></p>
+            </div>
+
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

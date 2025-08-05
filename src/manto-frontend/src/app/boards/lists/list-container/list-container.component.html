@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            
+            <ol style="padding-left: 0px; display: flex; background-color: aqua; margin-top: 8px;">
+                
+                @for (list of boardLists; track $index) {
+                    <app-list-wrapper>
+                        <app-list [listName]="list.name"></app-list>
+                        <h2>inside list-wrapper</h2>
+                    </app-list-wrapper>
+                }
+                
+                <app-list-wrapper >
+                    @if (!isAddingList) {
+                        <button class="d-flex justify-content-space" (click)="onAddNewList()" id="addListBtn">
+                            <mat-icon>add_circle</mat-icon>
+                            <span>Add a List</span>
+                        </button>
+                    }@else {
+                        <div style="padding: 10px; background-color: white; border-radius: 1rem;">
+                            <input type="text" placeholder="Enter your List name" #listNameRef>
+                            <div class="d-flex justify-content-start" style="margin-top: 2px;">
+                                <button type="button" 
+                                    class="btn btn-success btn-sm me-1"
+                                    (click)="onAddList(listNameRef.value);"
+                                >
+                                Done
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="onCloseAddNewList()">
+                                    <mat-icon style="min-width: 0; font-size: 18px; height: 18px; width: 18px; line-height: 1; vertical-align: middle; ">close_small</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </app-list-wrapper>
+
+            </ol>
+        </div>
+    </div>
+</div>

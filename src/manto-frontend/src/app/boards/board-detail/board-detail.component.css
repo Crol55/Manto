@@ -1,0 +1,22 @@
+.board-header{
+    /*background-color: wrgb(128, 128, 128, 0.80); */
+    padding: 1rem;
+
+    background-color: rgba(255, 255, 255, 0.2); /* transparent white */
+    backdrop-filter: blur(6px); /* optional, creates frosted glass effect */
+    border-radius: 8px;
+}   
+
+.board-container{
+    height: 100vh;
+}
+
+.board-header mat-icon:hover {
+
+    font-size: 28px;
+    
+}
+
+.board-header h2 {
+    margin-bottom: 0px;
+}
