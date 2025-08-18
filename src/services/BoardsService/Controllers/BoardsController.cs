@@ -7,6 +7,7 @@ using BoardsService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Asp.Versioning;
 using BoardsService.DTO.Extensions;
+using BoardsService.Common.Extensions;
 
 namespace BoardsService.Controllers
 {
@@ -43,6 +44,16 @@ namespace BoardsService.Controllers
         public ActionResult GetBoard(Guid id) { 
         
             return Ok();
+        }
+
+        [HttpGet()]
+        public ActionResult GetBoardsFromUser() {
+
+            string userId = User.GetUserIdOrThrow();
+
+            IEnumerable<BoardMembershipDetailDto> myBoards = _boardService.GetAllBoardsFromUser( Guid.Parse(userId) );
+
+            return Ok(myBoards);
         }
     }
 }
