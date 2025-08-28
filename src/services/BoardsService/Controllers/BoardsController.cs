@@ -26,10 +26,7 @@ namespace BoardsService.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBoard(BoardCreateDto boardCreateDto) {
 
-            string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-            // VERIFY THAT THE USERID IS NOT NULL
-            if (string.IsNullOrEmpty(userId))
-                throw new ValidationException($"The claim {JwtRegisteredClaimNames.Sub} was not provided");
+            string userId = User.GetUserIdOrThrow();
 
             if (!Guid.TryParse(userId, out Guid parsedUserId))
                 throw new ValidationException("Your userId is not well-formatted");
