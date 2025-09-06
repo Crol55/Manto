@@ -1,3 +1,13 @@
+
+ol {
+    padding-left: 0px; 
+    display: flex; 
+    background-color: aqua; 
+    margin-top: 8px; 
+    overflow-x: auto;
+    height: 500px;
+}
+
 ol app-list-wrapper #addListBtn{
     padding: 10px;
     background-color: white;

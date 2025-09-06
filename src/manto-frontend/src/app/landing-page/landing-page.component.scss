@@ -39,6 +39,35 @@ li:hover {
     cursor: pointer;
 }
 
+mat-icon:hover{
+    
+    transform: scale(1.3);
+}
+
+/* ==== Floating bar for asking the user for a new Input*/
+
+.nav-item {
+  position: relative; /* anchor for absolute child */
+}
+
+.floating-bar {
+  position: absolute;
+  top: 100%;   /* right below the nav-link */
+  left: 40%;
+  background: white;
+  padding: 0.25rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+  
+  input{
+    margin-bottom: 6px;
+    &::placeholder {
+        font-family: cursive;
+    }
+  }
+}
 
 /* Small devices (landscape phones, 576px and below)*/
 @media screen and (max-width: 576px) { 

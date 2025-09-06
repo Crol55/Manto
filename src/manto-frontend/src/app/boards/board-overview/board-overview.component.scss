@@ -1,0 +1,42 @@
+h3{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+mat-grid-tile {
+  background: lightblue;
+  border-radius: 0.5rem;
+}
+
+
+mat-grid-tile{
+
+  mat-grid-tile-header{
+    background: rgba(0, 0, 0, 0.18) ;
+  }
+
+  mat-grid-tile-footer{
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    mat-grid-tile-header{
+      font-weight: 700;
+      
+    }
+
+    mat-grid-tile-footer{
+      opacity: 1;
+    }
+  }
+}
+
+
+
+.tilesito:hover{
+  cursor: pointer;
+  color: brown;
+}

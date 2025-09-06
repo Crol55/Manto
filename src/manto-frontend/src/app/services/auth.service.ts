@@ -14,8 +14,10 @@ export class AuthService {
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 
-  public getAccessToken():string | null{
+  public getAccessToken():string {
 
-    return localStorage.getItem(this.TOKEN_KEY);
+    let userJWT = localStorage.getItem(this.TOKEN_KEY) ?? "N/A";
+    
+    return userJWT;
   }
 }
