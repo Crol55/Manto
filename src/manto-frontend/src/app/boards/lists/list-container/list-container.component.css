@@ -1,11 +1,13 @@
 
 ol {
+    /*border: 10px solid yellow;*/
     padding-left: 0px; 
     display: flex; 
     background-color: aqua; 
     margin-top: 8px; 
     overflow-x: auto;
-    height: 500px;
+    /*height: calc(100vh - 90px)  -- if I use this line the overflow will be at '.list-body', where its expected to be*/  
+    height: calc(100vh - 90px);
 }
 
 ol app-list-wrapper #addListBtn{

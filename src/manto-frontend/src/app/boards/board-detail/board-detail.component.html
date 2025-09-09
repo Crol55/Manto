@@ -1,10 +1,12 @@
 <div class="board-container" [ngStyle]="{ 'background-image': 'url(' + boardBackgroundUrl + ')' }">
 
-    <div class="d-flex justify-content-between board-header">
+    <div class="board-header d-flex justify-content-between">
         <h2>app-Board-detail Title</h2>
         <mat-icon>more_horiz</mat-icon>
     </div>
 
-    <app-list-container [boardId]="boardId"/>
+    <div class="board-body">
+        <app-list-container [boardId]="boardId"/>
+    </div>
      
 </div>

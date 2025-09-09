@@ -1,4 +1,6 @@
 .board-container{
+    /*display: flex;
+    flex-direction: column;*/
     height: 100vh;
 }
 
@@ -20,3 +22,4 @@
 .board-header h2 {
     margin-bottom: 0px;
 }
+
