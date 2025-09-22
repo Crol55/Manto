@@ -24,6 +24,16 @@ namespace BoardsService.DTO.Extensions
             };
         }
 
+        public static ListResponseDto ToDto(this BoardList boardList) {
+
+            return new ListResponseDto(
+                Id: boardList.Id,
+                Name: boardList.Name,
+                Position: boardList.Position,
+                BoardId: boardList.BoardId
+            );
+        }
+
         public static BoardResponseDto ToDTO(this Board board) {           
 
             return new BoardResponseDto(
