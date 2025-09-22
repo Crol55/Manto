@@ -2,9 +2,10 @@
 using BoardsService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using BoardsService.Models;
-using System.IdentityModel.Tokens.Jwt;
-using ServiceExceptionsLibrary;
 using Microsoft.AspNetCore.Authorization;
+using BoardsService.Common.Extensions;
+using BoardsService.DTO.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace BoardsService.Controllers
 {
@@ -14,31 +15,51 @@ namespace BoardsService.Controllers
     public class ListsController : ControllerBase
     {
         private readonly IListService _listService;
-        public ListsController(IListService listService) 
-        { 
+        public ListsController(IListService listService)
+        {
             _listService = listService;
         }
 
         [HttpPost]
-        public ActionResult AddList(ListCreateDto listCreateDto) {
-            
-            string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+        public ActionResult<ListResponseDto> AddList(ListCreateDto listCreateDto) {
 
-            if (string.IsNullOrEmpty(userId))
-                throw new ValidationException($"The claim {JwtRegisteredClaimNames.Sub} was not provided");
+            string userId = User.GetUserIdOrThrow();
 
             BoardList createdList = _listService.AddList(listCreateDto, Guid.Parse(userId));
-            
+
             return CreatedAtAction(
-                nameof(GetList), 
-                new { listName = createdList.Name, boardId = createdList.BoardId}
+                nameof(GetList),
+                createdList.ToDto()
                 );
         }
 
         [HttpGet]
         public ActionResult GetList(string listName, Guid boardId) {
 
-            return Ok(boardId + "" + listName);
+            return Ok(new { resultado = listName });
+        }
+
+
+        [HttpGet("{boardId:guid}")]
+        public ActionResult<IEnumerable<ListResponseDto>> GetAllLists(Guid boardId) {
+
+            //Vefiry JWT
+            User.GetUserIdOrThrow();
+
+            return Ok(this._listService.GetAllLists(boardId).Select(x => x.ToDto()));
+        }
+
+        [HttpPatch("{listId:guid}")] 
+        public IActionResult UpdateList(Guid listId, ListUpdateDto listUpdateDto) 
+        {
+            User.GetUserIdOrThrow();
+
+            Console.WriteLine("Si ingreso al 'updatelist()'" + listId);
+            Console.WriteLine(listUpdateDto);
+
+            this._listService.UpdateList(listId, listUpdateDto);
+
+            return Ok(new { msg = "update was received"});
         }
     }
 }
