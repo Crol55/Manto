@@ -1,4 +1,4 @@
 ﻿namespace BoardsService.DTO;
 
-public record ListUpdateDto(string Name, short Position, DateTime UpdatedAt);
+public record ListUpdateDto(string? Name, short? Position);
 
