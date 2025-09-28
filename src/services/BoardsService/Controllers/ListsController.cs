@@ -46,20 +46,17 @@ namespace BoardsService.Controllers
             //Vefiry JWT
             User.GetUserIdOrThrow();
 
-            return Ok(this._listService.GetAllLists(boardId).Select(x => x.ToDto()));
+            return Ok(_listService.GetAllLists(boardId).Select(x => x.ToDto()));
         }
 
         [HttpPatch("{listId:guid}")] 
         public IActionResult UpdateList(Guid listId, ListUpdateDto listUpdateDto) 
         {
-            User.GetUserIdOrThrow();
+            string userId = User.GetUserIdOrThrow();
 
-            Console.WriteLine("Si ingreso al 'updatelist()'" + listId);
-            Console.WriteLine(listUpdateDto);
+            _listService.UpdateList(listId, listUpdateDto, Guid.Parse(userId));
 
-            this._listService.UpdateList(listId, listUpdateDto);
-
-            return Ok(new { msg = "update was received"});
+            return NoContent();
         }
     }
 }
