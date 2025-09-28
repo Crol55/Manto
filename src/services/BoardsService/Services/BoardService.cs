@@ -1,3 +1,4 @@
+using System.Collections;
 using BoardsService.Common.Enums;
 using BoardsService.Data;
 using BoardsService.DTO;
@@ -57,6 +58,25 @@ namespace BoardsService.Services
             }
 
             return newBoard;
+        }
+
+
+        public IEnumerable<BoardMembershipDetailDto> GetAllBoardsFromUser(Guid userId) { // getboardsWhereUserIsMember
+
+            var userBoards = _dbContext.BoardMembers
+                .AsNoTracking()
+                .Where(bm => bm.UserId == userId)
+                .Select(x => new BoardMembershipDetailDto()
+                {
+                    BoardId = x.BoardId,
+                    BoardName = x.Board.Name,
+                    UserId = x.UserId,
+                    JoiningDate = x.JoiningDate,
+                    TypeOfMembership = x.Role.RoleName
+                })
+                .OrderBy(x => x.TypeOfMembership);
+
+            return userBoards.ToList();
         }
     }
 }
