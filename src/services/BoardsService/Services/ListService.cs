@@ -59,17 +59,23 @@ namespace BoardsService.Services
             this._dbContext.BoardLists.Where(bl => bl.BoardId == boardId).ToList();
 
 
-        public void UpdateList(Guid listId, ListUpdateDto newListValues) {
+        public void UpdateList(Guid listId, ListUpdateDto newListData, Guid RegisteredUserId) 
+        {
+            BoardList listToUpdate = this._dbContext.BoardLists
+                .SingleOrDefault(x => x.Id == listId)
+                ?? throw new ResourceNotFoundException($"The List {newListData.Name} doesnt exist in the current Board");
 
-            BoardList listToUpdate =  this._dbContext.BoardLists
-                .SingleOrDefault(x => x.Id == listId) 
-                ?? throw new Exception();// if null, it means they are accessing a non-existent resource
+            // Verify that the User trying to access this resource actually have access
+            Roles userRole = _boardMemberService.GetUserRole(RegisteredUserId, listToUpdate.BoardId);
+            if (userRole == Roles.None)
+                throw new ForbiddenAccessException("You dont have access to this Resource");
 
-            listToUpdate.Name = newListValues.Name ?? listToUpdate.Name;
-            listToUpdate.Position = newListValues.Position;// remember to conver short to short?  ?? listToUpdate.Position;
-            listToUpdate.UpdatedAt = newListValues.UpdatedAt;
+            listToUpdate.Name = newListData.Name ?? listToUpdate.Name;
+            listToUpdate.Position = newListData.Position ?? listToUpdate.Position;
+            
+            listToUpdate.UpdatedAt = DateTime.Now;
 
-             this._dbContext.SaveChanges();
+            this._dbContext.SaveChanges();
         }
     }
 }

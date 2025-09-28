@@ -9,6 +9,6 @@ namespace BoardsService.Services.Interfaces
 
         public IEnumerable<BoardList> GetAllLists(Guid boardId);
 
-        public void UpdateList(Guid listId, ListUpdateDto newListValues);
+        public void UpdateList(Guid listId, ListUpdateDto newListValues, Guid RegisteredUserId);
     }
 }
