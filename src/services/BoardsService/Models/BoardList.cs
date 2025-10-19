@@ -5,16 +5,19 @@ using Microsoft.EntityFrameworkCore;
 namespace BoardsService.Models
 {
     [Table("LIST", Schema = "board_service")]
-    [PrimaryKey(nameof(Name), nameof(BoardId))]
     public class BoardList
     {
-        /*  this class is a Weak entity
-         *  So it will have a composite primary key (because of the identifying relationship)
+        /*  This class represents a Weak entity
+         *  for a non-identifying relationship
          */
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public int Position { get; set; }
+        public short Position { get; set; }
 
         [Column("created_at")]
         [DatabaseGenerated (DatabaseGeneratedOption.Identity)]

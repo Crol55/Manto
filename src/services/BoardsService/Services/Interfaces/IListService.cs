@@ -7,5 +7,8 @@ namespace BoardsService.Services.Interfaces
     {
         public BoardList AddList(ListCreateDto dto, Guid RegisteredUserId);
 
+        public IEnumerable<BoardList> GetAllLists(Guid boardId);
+
+        public void UpdateList(Guid listId, ListUpdateDto newListValues, Guid RegisteredUserId);
     }
 }

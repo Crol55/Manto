@@ -60,6 +60,16 @@ namespace BoardsService
                     options.ApiVersionReader = new QueryStringApiVersionReader();
             }).AddMvc();
 
+            builder.Services.AddCors(options => {
+                options.AddPolicy("AllowFrontendPolicy", policy => {
+
+                    policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            
+            });
+
             // Add to Dependency-Injection
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<IBoardService, BoardService>();
@@ -79,6 +89,7 @@ namespace BoardsService
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowFrontendPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
 

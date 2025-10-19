@@ -8,7 +8,7 @@ namespace BoardsService.DTO
         public string Name { get; set; }
 
         [Required]
-        public int? Position { get; set; } 
+        public short? Position { get; set; } 
 
         [Required]
         public Guid? BoardId { get; set; }
