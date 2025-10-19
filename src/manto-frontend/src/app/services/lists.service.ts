@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
-import { ListCreate } from "../common/models/listCreate.model";
+import { ListCreate, ListResponseDto, ListUpdateDto } from "../common/models/listCreate.model";
 
 
 @Injectable({
@@ -25,16 +25,31 @@ export class ListsService{
 
         let endpoint = `${this.URL}/${boardId}`;
 
-        return this._httpClient.get<ListCreate[]>(endpoint, {
+        return this._httpClient.get<ListResponseDto[]>(endpoint, {
             headers: this.httpHeaders,
             observe: 'response'
         })
     }
 
-    public postNewList(listCreate: ListCreate){
-        
-        this._httpClient.post(this.URL, listCreate, {
-            headers: this.httpHeaders
-        }).subscribe(mydata => {console.log(mydata);});
+
+    public postNewList(listCreate: ListCreate)
+    {
+        return this._httpClient.post<ListResponseDto>(this.URL, listCreate, {
+            headers: this.httpHeaders,
+            observe: 'response'
+        });
+    }
+
+
+    public updateList(resourceId: string, newListValues: ListUpdateDto)
+    {
+        let patchEndpoint = `${this.URL}/${resourceId}`;
+
+        return this._httpClient.patch<void>(patchEndpoint, newListValues, 
+            {
+                headers: this.httpHeaders, 
+                observe: 'response'
+            }
+        );
     }
 }

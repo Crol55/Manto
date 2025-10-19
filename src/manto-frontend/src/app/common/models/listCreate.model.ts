@@ -1,15 +1,15 @@
-//export interface ListCreate {
-//    name: string,
-//    position: number,
-//    boardId: string
-//}
 
 export interface BoardList {
+    id:string,
     name: string,
-    position: number,
+    position: number ,
     createdAt: Date,
     updatedAt: Date,
-    boardId: string | null
+    boardId: string// | null
 }
 
 export type ListCreate = Pick<BoardList, "name" | "position" | "boardId">;
+
+export type ListUpdateDto = Pick<BoardList, "name" | "position">
+
+export type ListResponseDto = Pick<BoardList, "id" |"name" | "position" | "boardId">;

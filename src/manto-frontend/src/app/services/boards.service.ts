@@ -1,32 +1,54 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
-import { BoardDetail, BoardResponse } from '../common/models/BoardDetail.model';
+import { Observable, tap } from 'rxjs';
+import { Board, BoardDetailDto, BoardResponse } from '../common/models/board.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardsService {
 
-  private PORT:number = 7120;
-  private URL:string = `https://localhost:${this.PORT}/boards`;
+  constructor(
+    private httpClient: HttpClient, 
+    private authService: AuthService
+  )
+  {}
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  private boardCollection = new Map<string, Board>();
+
+  private readonly PORT:number = 7120;
+  private readonly URL:string = `https://localhost:${this.PORT}/boards`;
+
 
   // ** get's methods
-  public getBoardsWhereUserIsMember(): Observable<HttpResponse<BoardDetail[]>>{
+  public getBoardsWhereUserIsMember(): Observable<HttpResponse<BoardDetailDto[]>>{
 
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.authService.getAccessToken()}`
     });
 
-    return this.httpClient.get<BoardDetail[]>(this.URL, {
+    return this.httpClient.get<BoardDetailDto[]>(this.URL, {
       headers: httpHeaders,
       observe: 'response'
     });
   }
+
+  public getBoard(boardId: string)
+  {
+    const endpoint = `${this.URL}/${boardId}`;
+
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.authService.getAccessToken()}`
+    });
+
+    return this.httpClient.get<BoardDetailDto>(endpoint, {
+      headers: httpHeaders
+    });
+
+  }
   
+
   // ** post's methods
   public postNewBoard(boardName: string, projectId?:string){
 
@@ -42,7 +64,24 @@ export class BoardsService {
     return this.httpClient.post<BoardResponse>(this.URL, body, {
       headers: httpHeaders,
       observe:'response'
-    });
+    })/*.pipe(tap({
+      next: response => {
+        if (response.ok)
+          this.boardCollection.set(response.body!.boardId, { id});
+      }
+    }))*/;
+  }
+
+  // ** Helper methods
+
+  public saveBoard(board:Board) // This should be the only way for updating the collection of boards
+  {
+    this.boardCollection.set(board.id, board);
+  }
+
+  public retrieveBoard(key: string)
+  {
+    return this.boardCollection.get(key);
   }
 }
 

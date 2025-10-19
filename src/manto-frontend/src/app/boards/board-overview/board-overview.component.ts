@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { BoardDetail } from '../../common/models/BoardDetail.model';
+import { BoardDetailDto } from '../../common/models/board.model';
 
 
 @Component({
@@ -15,14 +15,7 @@ import { BoardDetail } from '../../common/models/BoardDetail.model';
 
 export class BoardOverviewComponent implements OnChanges{
   
-  //boards = [ 
-  //  {id:"2", name: "USAC", icon: "favorite"},
-  //  {id:"2", name: "Landivar", icon: "favorite"},
-  //  {id:"2", name: "Intel", icon: "favorite"},
-  //  {id:"2", name: "Dell", icon: "favorite"}
-  //];
-
-  @Input() BoardsList: BoardDetail [] = [];
+  @Input() BoardsList: BoardDetailDto [] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
 
