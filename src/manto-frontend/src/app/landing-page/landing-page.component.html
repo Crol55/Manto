@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-3 col-sm-2 barra-lateral p-0">
+            <div class="logo">
+                <h2> Manto</h2>
+            </div>
+
+            <nav class="nav flex-sm-column justify-content-center">
+
+                <div class="nav-item">
+
+                    <a class="nav-link d-flex justify-content-between align-items-center" style="padding-right: 0.5rem;"
+                        (click)="toggleBoards()">
+                        <span>Boards</span>
+                        <div>
+                            <mat-icon (click)="openNewBoardForm($event)">note_add</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
+                        </div>
+                    </a>
+
+                    @if (showForm) {
+                    <div class="floating-bar" tabindex="0" (keydown.escape)="closeNewBoardForm()">
+                        <input appFocus type="text" placeholder="Add Board Name"
+                            (keydown.enter)="CreateBoard(newBoardNameRef.value); newBoardNameRef.value='';" #newBoardNameRef/>
+
+                        <select name="" id="">
+                            <option selected>Select project</option>
+                            <option value="1">Usac</option>
+                            <option value="1">Santa marina</option>
+                        </select>
+                    </div>
+                    }
+                </div>
+                <!-- Collapsible List of Boards -->
+                @if (showBoards) {
+                <ul class="list-unstyled ms-3">
+                    @for (board of boards; track board.boardId) {
+                    <li class="py-1" (click)="onOpenBoard(board.boardId)">
+                        {{ board.boardName }}
+                    </li>
+                    }
+                </ul>
+                }
+
+                <a class="nav-link d-flex justify-content-between align-items-center">
+                    Projects
+                    <mat-icon>note_add</mat-icon>
+                </a>
+                <!--<ul class="list-unstyled ms-3">
+                    <li>Hello world</li>
+                </ul>-->
+                <a class="nav-link d-flex justify-content-between">
+                    Teams
+                    <div>
+                        <mat-icon>expand_less</mat-icon>
+                        <mat-icon>keyboard_arrow_down</mat-icon>
+                    </div>
+
+                </a>
+            </nav>
+        </aside>
+
+        <div class="col">
+            <app-board-overview [BoardsList]="boards"></app-board-overview>
+        </div>
+    </div>
+</div>

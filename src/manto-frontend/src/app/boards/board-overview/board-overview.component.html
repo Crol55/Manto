@@ -1,0 +1,36 @@
+
+<h3>Boards Overview</h3>
+<hr>
+
+<h2>My Boards</h2>
+
+<div style="max-height: 60vh; overflow: auto;">
+
+  <mat-grid-list cols="4" rowHeight="2:1" gutterSize="15px">
+
+    <mat-grid-tile class="tilesito">
+      <mat-grid-tile-header style="color: black;">New board</mat-grid-tile-header>
+      <h4>Click to add a new Board</h4>
+    </mat-grid-tile>
+
+    @for (item of BoardsList; track $index)
+    {
+    <a [routerLink]="['/boards', item.boardId]">
+      <mat-grid-tile>
+        <mat-grid-tile-header>
+          {{item.boardName}}
+        </mat-grid-tile-header>
+        
+        <mat-grid-tile-footer>
+          Like
+          <mat-icon>{{"favorite"}}</mat-icon>
+        </mat-grid-tile-footer>
+        
+      </mat-grid-tile>
+    </a>
+    }
+
+  </mat-grid-list>
+
+</div>
+

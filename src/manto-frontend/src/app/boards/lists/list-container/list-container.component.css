@@ -1,0 +1,47 @@
+
+ol {
+    /*border: 10px solid yellow;*/
+    padding-left: 0px; 
+    display: flex; 
+    background-color: aqua; 
+    margin-top: 8px; 
+    overflow-x: auto;
+    /*height: calc(100vh - 90px)  -- if I use this line the overflow will be at '.list-body', where its expected to be*/  
+    height: calc(100vh - 90px);
+}
+
+ol app-list-wrapper #addListBtn{
+    padding: 10px;
+    background-color: white;
+    border-radius: 1rem;
+    width: 100%;
+    display: flex;
+    align-items:end; 
+
+    transition: background-color 0.5s ease;
+}
+
+ol app-list-wrapper #addListBtn:hover {
+    background-color: rgba(255,255,255, 0.5);
+}
+
+app-list-wrapper #addListBtn span {
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+app-list-wrapper input {
+   
+    height: 30px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+app-list-wrapper input:focus::placeholder {
+   
+    color: transparent;
+    transition: color 0.4s ease;
+}
+
+
