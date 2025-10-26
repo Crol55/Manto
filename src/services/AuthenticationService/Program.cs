@@ -28,6 +28,16 @@ namespace AuthenticationService
 
             builder.Services.AddAutoMapper(typeof(Program));
 
+            builder.Services.AddCors( 
+                options => {
+                    options.AddPolicy("AllowFrontendPolicy", policy => {
+                        policy.WithOrigins("http://localhost:4200");
+                        policy.AllowAnyMethod();
+                        policy.AllowAnyHeader();
+                    });
+                }
+            );
+
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 
             var app = builder.Build();
@@ -45,6 +55,7 @@ namespace AuthenticationService
 
             app.UseAuthorization();
 
+            app.UseCors("AllowFrontendPolicy");
 
             app.MapControllers();
 
